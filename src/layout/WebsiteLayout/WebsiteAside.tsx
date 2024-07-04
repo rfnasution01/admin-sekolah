@@ -22,7 +22,7 @@ library.add(fab, fas)
 
 export function WebsiteHeader() {
   const navigate = useNavigate()
-  const { secondPathname } = usePathname()
+  const { secondPathname, thirdPathname } = usePathname()
   const [isShow, setIsShow] = useState<boolean>(false)
   const [activeIndex, setActiveIndex] = useState<number | null>(null)
 
@@ -119,7 +119,8 @@ export function WebsiteHeader() {
   const isActivePage = (item: string) => {
     if (
       (item.toLowerCase() === 'dashboard' && secondPathname === undefined) ||
-      item?.toLocaleLowerCase() === secondPathname
+      item?.toLocaleLowerCase() === secondPathname ||
+      item === `${secondPathname}/${thirdPathname}`
     ) {
       return true
     }
@@ -150,7 +151,7 @@ export function WebsiteHeader() {
           {/* --- Navigasi --- */}
           <div className="scrollbar flex h-full flex-col gap-12 overflow-y-auto px-32">
             {menuWebsite?.map((item, idx) => (
-              <div className="flex flex-col gap-32" key={idx}>
+              <div className="flex flex-col gap-12" key={idx}>
                 <LinkParent
                   setActiveIndex={setActiveIndex}
                   setIsShow={setIsShow}

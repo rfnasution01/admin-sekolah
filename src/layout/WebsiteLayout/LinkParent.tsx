@@ -1,4 +1,3 @@
-import { convertToSlug } from '@/libs/helpers/formatText'
 import { usePathname } from '@/libs/hooks/usePathname'
 import { GetMenuWebsiteResponseType } from '@/libs/type/RootWebsite'
 import { faCaretDown } from '@fortawesome/free-solid-svg-icons'
@@ -33,15 +32,13 @@ export function LinkParent({
           ? ''
           : item?.nama_menu === 'Dashboard'
             ? `/${firstPathname}`
-            : `/${firstPathname}/${convertToSlug(item?.link)}`
+            : `/${firstPathname}/${item?.link}`
       }
       className={clsx(
         'flex items-center gap-12 rounded-2xl px-24 py-16 hover:bg-warna-pale-blue hover:text-warna-primary',
         {
-          'bg-warna-pale-blue text-warna-primary': isActivePage(
-            item?.nama_menu,
-          ),
-          'text-warna-grey': !isActivePage(item?.nama_menu),
+          'bg-warna-pale-blue text-warna-primary': isActivePage(item?.link),
+          'text-warna-grey': !isActivePage(item?.link),
         },
       )}
       onClick={(e) => {

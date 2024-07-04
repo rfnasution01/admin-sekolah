@@ -1,5 +1,4 @@
 import { IconList } from '@/assets'
-import { convertToSlug } from '@/libs/helpers/formatText'
 import { usePathname } from '@/libs/hooks/usePathname'
 import { GetMenuWebsiteResponseType } from '@/libs/type/RootWebsite'
 import clsx from 'clsx'
@@ -18,20 +17,20 @@ export function LinkChild({
     <div className="flex flex-col gap-12 px-32">
       {item?.children?.map((list, id) => (
         <Link
-          to={`/${firstPathname}/${convertToSlug(list?.link)}`}
+          to={`/${firstPathname}/${list?.link}`}
           className={clsx(
             'flex items-center gap-12 py-4 hover:cursor-pointer hover:text-warna-primary',
             {
-              'bg-warna-pale-blue text-warna-primary': isActivePage(
-                list?.nama_menu,
-              ),
-              'text-warna-grey': !isActivePage(list?.nama_menu),
+              'text-warna-primary': isActivePage(list?.link),
+              'text-warna-grey': !isActivePage(list?.link),
             },
           )}
           key={id}
         >
           <span>
-            <IconList />
+            <IconList
+              fill2={isActivePage(list?.link) ? '#195EE5' : '#7D95A1'}
+            />
           </span>
           <p>{list.nama_menu}</p>
         </Link>

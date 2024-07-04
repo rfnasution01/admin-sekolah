@@ -4,6 +4,8 @@ import {
   CommonLayout,
   LoginLayout,
   RootLayout,
+  TentangSekolahPage,
+  VisiMisiPage,
   WebsiteLayout,
 } from './loadables'
 import Cookies from 'js-cookie'
@@ -32,35 +34,49 @@ export const router = createBrowserRouter([
         children: [
           {
             path: '',
-            element: <ComingSoonPage isLayout />,
+            element: <ComingSoonPage />,
           },
           {
             path: 'pengumuman',
-            element: <ComingSoonPage isLayout />,
+            element: <ComingSoonPage />,
           },
           {
             path: 'mading',
-            element: <ComingSoonPage isLayout />,
+            element: <ComingSoonPage />,
           },
           {
             path: 'berita',
-            element: <ComingSoonPage isLayout />,
+            element: <ComingSoonPage />,
+          },
+          {
+            path: 'profil',
+            element: <CommonLayout />,
+            children: [
+              {
+                path: 'tentang',
+                element: <TentangSekolahPage />,
+              },
+              {
+                path: 'visimisi',
+                element: <VisiMisiPage />,
+              },
+            ],
           },
           {
             path: 'agenda',
-            element: <ComingSoonPage isLayout />,
+            element: <ComingSoonPage />,
           },
           {
             path: 'prestasi',
-            element: <ComingSoonPage isLayout />,
+            element: <ComingSoonPage />,
           },
           {
             path: 'galeri',
-            element: <ComingSoonPage isLayout />,
+            element: <ComingSoonPage />,
           },
           {
             path: 'kontak',
-            element: <ComingSoonPage isLayout />,
+            element: <ComingSoonPage />,
           },
         ],
       },

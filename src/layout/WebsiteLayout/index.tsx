@@ -6,7 +6,7 @@ import { Outlet } from 'react-router-dom'
 
 export default function WebsiteLayout() {
   return (
-    <div className="flex h-screen w-full bg-warna-pale-blue">
+    <div className="flex h-screen w-full bg-warna-pale-blue text-[2rem] phones:text-[2.4rem]">
       {/* --- Aside --- */}
       <WebsiteHeader />
       <div className="flex h-full flex-1 flex-col p-32">
