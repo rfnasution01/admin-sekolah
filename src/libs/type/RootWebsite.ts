@@ -1,4 +1,6 @@
-export type GetIdentitasWebsiteResponse = {
+import { IconName } from '@fortawesome/fontawesome-svg-core'
+
+export type GetIdentitasWebsiteResponseType = {
   nama_aplikasi: string
   folder: string
   gambar: string
@@ -9,10 +11,10 @@ export type GetIdentitasWebsiteResponse = {
   footer: string
 }
 
-export type GetMenuWebsite = {
+export type GetMenuWebsiteResponseType = {
   id: string
   nama_menu: string
-  icon: string
+  icon: IconName
   link: string
   id_parent: string
   urutan: string
@@ -20,4 +22,5 @@ export type GetMenuWebsite = {
   tulis: string
   ubah: string
   hapus: string
+  children: GetMenuWebsiteResponseType[]
 }

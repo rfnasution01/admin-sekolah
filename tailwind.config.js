@@ -104,6 +104,7 @@ export default {
           primary: '#195EE5',
           red: '#E00000',
           dark: '#1F475C',
+          grey: '#7D95A1',
         },
         primary: {
           DEFAULT: '#28A6F4',

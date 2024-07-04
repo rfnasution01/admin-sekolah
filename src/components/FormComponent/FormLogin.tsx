@@ -3,9 +3,10 @@ import { UseFormReturn } from 'react-hook-form'
 import { Form } from '../Form'
 import { FormLabelInput } from '../InputComponent'
 import { useState } from 'react'
-import { Eye, EyeOff, Loader2 } from 'lucide-react'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Link } from 'react-router-dom'
 import { IconLogin } from '@/assets'
+import { faEye, faEyeSlash, faSpinner } from '@fortawesome/free-solid-svg-icons'
 
 export function FormLogin({
   form,
@@ -52,7 +53,11 @@ export function FormLogin({
                   setIsShow(!isShow)
                 }}
               >
-                {isShow ? <Eye size={16} /> : <EyeOff size={16} />}
+                {isShow ? (
+                  <FontAwesomeIcon icon={faEye} />
+                ) : (
+                  <FontAwesomeIcon icon={faEyeSlash} />
+                )}
               </span>
             }
             type={isShow ? 'text' : 'password'}
@@ -81,7 +86,7 @@ export function FormLogin({
             <p>Login</p>
             {isLoading ? (
               <span className="animate-spin duration-300">
-                <Loader2 size={16} />
+                <FontAwesomeIcon icon={faSpinner} />
               </span>
             ) : (
               <IconLogin />
