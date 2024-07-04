@@ -46,3 +46,17 @@ export type List = {
   keterangan: string
   urutan: string
 }
+
+export type PostTentangProfilParams = {
+  id?: string
+  jenis?: string
+  keterangan?: string
+  sub_keterangan?: string
+  gambar_url?: string
+  list: ListParams[]
+}
+
+export type ListParams = {
+  keterangan: string
+  urutan: string
+}

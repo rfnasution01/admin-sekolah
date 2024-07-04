@@ -15,6 +15,11 @@ export const ComingSoonPage = loadable(() => import('@/pages/ComingSoon'))
 export const TentangSekolahPage = loadable(
   () => import('@/pages/Website/Profil/TentangSekolah'),
 )
+
+export const TambahProfilSekolahPage = loadable(
+  () => import('@/features/website/tentang/TambahProfil'),
+)
+
 export const VisiMisiPage = loadable(
   () => import('@/pages/Website/Profil/VisiMisi'),
 )

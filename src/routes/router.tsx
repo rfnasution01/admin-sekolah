@@ -4,6 +4,7 @@ import {
   CommonLayout,
   LoginLayout,
   RootLayout,
+  TambahProfilSekolahPage,
   TentangSekolahPage,
   VisiMisiPage,
   WebsiteLayout,
@@ -54,7 +55,17 @@ export const router = createBrowserRouter([
             children: [
               {
                 path: 'tentang',
-                element: <TentangSekolahPage />,
+                element: <CommonLayout />,
+                children: [
+                  {
+                    path: '',
+                    element: <TentangSekolahPage />,
+                  },
+                  {
+                    path: ':aksi',
+                    element: <TambahProfilSekolahPage />,
+                  },
+                ],
               },
               {
                 path: 'visimisi',
