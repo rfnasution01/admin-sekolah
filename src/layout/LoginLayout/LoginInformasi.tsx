@@ -3,6 +3,7 @@ import { capitalizeFirstLetterFromLowercase } from '@/libs/helpers/formatText'
 import { GetLoginResponseType } from '@/libs/type'
 import { useGetLoginQuery } from '@/store/slices/LoginAPI'
 import { useEffect, useState } from 'react'
+import Helmet from 'react-helmet'
 
 export function LoginInformasi() {
   const [login, setLogin] = useState<GetLoginResponseType>()
@@ -62,6 +63,11 @@ export function LoginInformasi() {
           </div>
         </div>
       )}
+      <Helmet>
+        <meta charSet="utf-8" />
+        <title>{login?.nama}</title>
+        <link rel="canonical" href="https://demolaman1.avnet.id/" />
+      </Helmet>
     </div>
   )
 }

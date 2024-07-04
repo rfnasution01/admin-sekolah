@@ -9,6 +9,7 @@ import { useNavigate } from 'react-router-dom'
 import { Bounce, toast } from 'react-toastify'
 import Cookies from 'js-cookie'
 import { IconLogout, IconUser } from '@/assets'
+import Helmet from 'react-helmet'
 
 export function RootHeader() {
   const navigate = useNavigate()
@@ -139,6 +140,11 @@ export function RootHeader() {
           </div>
         </>
       )}
+      <Helmet>
+        <meta charSet="utf-8" />
+        <title>{identitasAdmin?.nama}</title>
+        <link rel="canonical" href="https://demolaman1.avnet.id/" />
+      </Helmet>
     </div>
   )
 }

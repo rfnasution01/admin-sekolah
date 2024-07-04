@@ -1,11 +1,17 @@
 import { createBrowserRouter, redirect } from 'react-router-dom'
-import { ComingSoonPage, LoginLayout, RootLayout } from './loadables'
+import {
+  ComingSoonPage,
+  CommonLayout,
+  LoginLayout,
+  RootLayout,
+  WebsiteLayout,
+} from './loadables'
 import Cookies from 'js-cookie'
 
 export const router = createBrowserRouter([
   {
     path: '/',
-    element: <RootLayout />,
+    element: <CommonLayout />,
     loader: async () => {
       const jwtPayload = Cookies.get('token')
 
@@ -15,6 +21,16 @@ export const router = createBrowserRouter([
 
       return null
     },
+    children: [
+      {
+        path: '',
+        element: <RootLayout />,
+      },
+      {
+        path: 'website',
+        element: <WebsiteLayout />,
+      },
+    ],
   },
   {
     path: '/login',
