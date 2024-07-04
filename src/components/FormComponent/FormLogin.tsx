@@ -1,0 +1,94 @@
+import { LoginParamsType } from '@/libs/type'
+import { UseFormReturn } from 'react-hook-form'
+import { Form } from '../Form'
+import { FormLabelInput } from '../InputComponent'
+import { useState } from 'react'
+import { Eye, EyeOff, Loader2 } from 'lucide-react'
+import { Link } from 'react-router-dom'
+import { IconLogin } from '@/assets'
+
+export function FormLogin({
+  form,
+  isLoading,
+  handleSubmit,
+  angka1,
+  angka2,
+}: {
+  form: UseFormReturn
+  isLoading: boolean
+  handleSubmit: (values: LoginParamsType) => Promise<void>
+  angka1: number
+  angka2: number
+}) {
+  const [isShow, setIsShow] = useState<boolean>(false)
+
+  return (
+    <div className="h-auto w-[70%] rounded-2x border border-warna-pale-grey p-32 phones:h-4/5 phones:w-4/5">
+      <Form {...form}>
+        <form
+          className="flex flex-col gap-32"
+          onSubmit={form.handleSubmit(handleSubmit)}
+        >
+          <FormLabelInput
+            name="username"
+            form={form}
+            label="Username / NIP"
+            placeholder="Masukkan username atau nip"
+            className="text-sim-dark"
+            type="text"
+            isDisabled={isLoading}
+          />
+
+          <FormLabelInput
+            name="password"
+            form={form}
+            label="Password"
+            placeholder="Masukkan password"
+            className="text-sim-dark"
+            isDisabled={isLoading}
+            suffix={
+              <span
+                onClick={() => {
+                  setIsShow(!isShow)
+                }}
+              >
+                {isShow ? <Eye size={16} /> : <EyeOff size={16} />}
+              </span>
+            }
+            type={isShow ? 'text' : 'password'}
+          />
+
+          <FormLabelInput
+            name="hasil"
+            form={form}
+            label={`Hasil dari ${angka1} + ${angka2} = ?`}
+            placeholder="Masukkan hasil penjumlahan"
+            className="text-sim-dark"
+            type="text"
+            isNumber
+            isDisabled={isLoading}
+          />
+          <Link
+            to={'lupa-password'}
+            className="text-center text-warna-primary underline"
+          >
+            Lupa Password?
+          </Link>
+          <button
+            type="submit"
+            className="flex items-center justify-center gap-12 rounded-2xl bg-warna-primary py-12 text-white"
+          >
+            <p>Login</p>
+            {isLoading ? (
+              <span className="animate-spin duration-300">
+                <Loader2 size={16} />
+              </span>
+            ) : (
+              <IconLogin />
+            )}
+          </button>
+        </form>
+      </Form>
+    </div>
+  )
+}
