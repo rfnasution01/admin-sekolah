@@ -1,4 +1,4 @@
-import { UseFormReturn } from 'react-hook-form'
+import { useFieldArray, UseFormReturn } from 'react-hook-form'
 import {
   Form,
   FormControl,
@@ -9,6 +9,7 @@ import {
 import { FormLabelInput, Input } from '../../../InputComponent'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {
+  faPlus,
   faSave,
   faSpinner,
   faTrash,
@@ -20,6 +21,7 @@ import { useCreateFileMutation } from '@/store/slices/ReferensiAPI'
 import { Dispatch, SetStateAction, useEffect } from 'react'
 import { Bounce, toast } from 'react-toastify'
 import clsx from 'clsx'
+import { usePathname } from '@/libs/hooks/usePathname'
 
 export function FormTambahProfil({
   form,
@@ -34,6 +36,7 @@ export function FormTambahProfil({
   setUrls: Dispatch<SetStateAction<string>>
   urls: string
 }) {
+  const { lastPathname } = usePathname()
   // --- Upload File ---
   const [
     uploadFileMutation,
@@ -102,6 +105,11 @@ export function FormTambahProfil({
     }
   }, [isErrorFile, errorFile])
 
+  const { fields, append, remove } = useFieldArray({
+    control: form.control,
+    name: 'list',
+  })
+
   return (
     <Form {...form}>
       <form
@@ -114,12 +122,11 @@ export function FormTambahProfil({
             name="jenis"
             headerLabel="Jenis"
             placeholder="Pilih jenis"
-            className="w-1/2 phones:w-full"
+            className="w-1/2 hover:cursor-not-allowed phones:w-full "
+            isDisabled={isLoading || lastPathname === 'edit'}
           />
           <div className="w-1/2" />
         </div>
-
-        <hr className="border" />
 
         <div className="flex gap-64 phones:flex-col phones:gap-32">
           <FormLabelInput
@@ -143,7 +150,53 @@ export function FormTambahProfil({
           />
         </div>
 
-        <hr className="border" />
+        <div className="flex flex-col gap-y-16 text-warna-dark">
+          <p className="text-[2rem]">List</p>
+          {fields.map((item, index) => (
+            <div key={item.id} className="flex gap-32">
+              <div className="flex flex-1 items-center gap-32">
+                <FormLabelInput
+                  name={`list.${index}.keterangan`}
+                  form={form}
+                  label="Keterangan"
+                  placeholder="Masukkan keterangan"
+                  className="w-4/6"
+                  type="text"
+                  isDisabled={isLoading}
+                />
+                <FormLabelInput
+                  name={`list.${index}.urutan`}
+                  form={form}
+                  label="Urutan"
+                  placeholder="Masukkan urutan"
+                  className="w-1/6"
+                  type="text"
+                  isDisabled={isLoading}
+                  isNumber
+                />
+              </div>
+              <div className="flex items-end">
+                <button
+                  type="button"
+                  onClick={() => remove(index)}
+                  className="rounded rounded-lg bg-warna-red px-16 py-16 text-white hover:bg-opacity-80"
+                >
+                  <FontAwesomeIcon icon={faTrash} />
+                </button>
+              </div>
+            </div>
+          ))}
+          <div className="flex">
+            <button
+              type="button"
+              onClick={() => append({ nama: '', urutan: '' })}
+              className="rounded flex items-center gap-12 rounded-lg bg-blue-500 px-24 py-12 text-white hover:bg-opacity-80"
+            >
+              <FontAwesomeIcon icon={faPlus} />
+              <p>Tambah</p>
+            </button>
+          </div>
+        </div>
 
         <FormField
           name="berkas"
@@ -240,13 +293,12 @@ export function FormTambahProfil({
             </FormItem>
           )}
         />
-
         <div className="flex justify-end">
           <button
             type="submit"
             className="flex items-center justify-center gap-12 rounded-2xl bg-warna-primary px-32 py-12 text-white"
           >
-            <p>Tambah</p>
+            <p>{lastPathname === 'edit' ? 'Edit' : 'Tambah'}</p>
             {isLoading ? (
               <span className="animate-spin duration-300">
                 <FontAwesomeIcon icon={faSpinner} />

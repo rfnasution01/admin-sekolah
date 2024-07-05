@@ -5,6 +5,7 @@ import { ProfilSekolahType } from '@/libs/type'
 import { faPencil, faSpinner, faTrash } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 
 export function ProfilSekolah({
   data,
@@ -17,9 +18,12 @@ export function ProfilSekolah({
   handleSubmitDelete: (id: string) => Promise<void>
   isLoadingDelete: boolean
 }) {
+  const navigate = useNavigate()
+
   const tujuanSekolah = data?.find((item) => item?.jenis === 'Tujuan')
   const hasilSekolah = data?.find((item) => item?.jenis === 'Hasil')
   const sasaranSekolah = data?.find((item) => item?.jenis === 'Sasaran')
+
   const [isShowDelete, setIsShowDelete] = useState<boolean>(false)
 
   const item =
@@ -41,6 +45,11 @@ export function ProfilSekolah({
         <div className="flex gap-12">
           <button
             type="button"
+            onClick={() => {
+              localStorage.setItem('editID', item?.id)
+              localStorage.setItem('jenisID', item?.jenis)
+              navigate('edit')
+            }}
             className="flex items-center gap-12 rounded-2xl bg-warna-dark px-24 py-12 text-white hover:bg-opacity-80"
           >
             <FontAwesomeIcon icon={faPencil} />

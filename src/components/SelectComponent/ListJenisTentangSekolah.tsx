@@ -13,6 +13,7 @@ import { customStyles } from '@/libs/variants/SelectProps'
 import { useGetJenisProfilQuery } from '@/store/slices/ReferensiAPI'
 import { ProfilSekolahType } from '@/libs/type'
 import { useGetTentangSekolahQuery } from '@/store/slices/WebsiteProfilAPI'
+import { usePathname } from '@/libs/hooks/usePathname'
 
 type inputProps = {
   placeholder: string
@@ -31,6 +32,7 @@ export function SelectListJenisTentangSekolah({
   useFormReturn,
   className,
 }: inputProps) {
+  const { lastPathname } = usePathname()
   const [query, setQuery] = useState<string>(null)
   const [identitas, setIdentitas] = useState<ProfilSekolahType[]>([])
 
@@ -66,9 +68,12 @@ export function SelectListJenisTentangSekolah({
     (item) => !listJenis?.includes(item),
   )
 
+  const menu =
+    lastPathname === 'edit' ? listJenisTentangSekolah : filteredMenuData
+
   let JenisTentangSekolahOption = []
   if (isSuccess) {
-    JenisTentangSekolahOption = filteredMenuData.map((item) => {
+    JenisTentangSekolahOption = menu.map((item) => {
       return {
         value: item,
         label: item,

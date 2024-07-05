@@ -1,4 +1,3 @@
-import { usePathname } from '@/libs/hooks/usePathname'
 import { GetTentangSekolahResponse } from '@/libs/type/website/WebsiteProfil'
 import { useGetJenisProfilQuery } from '@/store/slices/ReferensiAPI'
 import { faPlus } from '@fortawesome/free-solid-svg-icons'
@@ -16,7 +15,6 @@ export function TentangSekolahTab({
   menu: string
   dataTentang: GetTentangSekolahResponse
 }) {
-  const { firstPathname, secondPathname, thirdPathname } = usePathname()
   const [jenisProfil, setJenisProfil] = useState<string[]>([])
   const { data: dataJenisProfil } = useGetJenisProfilQuery()
 
@@ -67,7 +65,7 @@ export function TentangSekolahTab({
       ))}
       {dataTentang?.profil?.length < jenisProfil?.length && (
         <Link
-          to={`/${firstPathname}/${secondPathname}/${thirdPathname}/tambah`}
+          to={`tambah`}
           className={clsx(
             'mb-12 flex items-center gap-12 rounded-lg border-transparent bg-warna-primary px-12 py-4 text-[1.8rem] text-white transition-all duration-300 ease-in-out hover:cursor-pointer hover:bg-opacity-80',
           )}
