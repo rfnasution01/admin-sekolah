@@ -64,4 +64,6 @@ export const IdentitasSekolahSchema = zod.object({
   nama_pimpinan: zod.string().optional().nullable().nullish(),
   nip_pimpinan: zod.string().optional().nullable().nullish(),
   photo_pimpinan: zod.string().optional().nullable().nullish(),
+  penyelenggaraan_mulai: zod.string().optional().nullable().nullish(),
+  penyelenggaraan_akhir: zod.string().optional().nullable().nullish(),
 })

@@ -15,6 +15,8 @@ export type IdentitasSekolahType = {
   tgl_mulai_akreditasi: string
   tgl_akhir_akreditasi: string
   penyelenggaraan: string
+  penyelenggaraan_mulai: string
+  penyelenggaraan_akhir: string
   nis: string
   nss: string
   alamat: string
@@ -67,7 +69,7 @@ export type PostIdentitasSekolahParams = {
   sk_pendirian: string
   tgl_sk_pendirian: string
   sk_operasional: string
-  tgl_sk_opersioanal: string
+  tgl_sk_operasional: string
   id_akreditasi: string
   tgl_mulai_akreditasi: string
   tgl_akhir_akreditasi: string
@@ -80,4 +82,6 @@ export type PostIdentitasSekolahParams = {
   nama_pimpinan: string
   nip_pimpinan: string
   photo_pimpinan: string
+  penyelenggaraan_mulai: string
+  penyelenggaraan_akhir: string
 }

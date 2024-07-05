@@ -1,295 +1,288 @@
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormMessage,
-} from '../../../Form'
-import { FormLabelInput, Input } from '../../../InputComponent'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import {
-  faArrowLeft,
-  faSave,
-  faSpinner,
-  faTrash,
-  faUpload,
-} from '@fortawesome/free-solid-svg-icons'
-import {
-  GetTentangSekolahResponse,
-  PostIdentitasSekolahParams,
-} from '@/libs/type'
-import { useCreateFileMutation } from '@/store/slices/ReferensiAPI'
-import { useEffect, useState } from 'react'
-import { Bounce, toast, ToastContainer } from 'react-toastify'
-import 'react-toastify/dist/ReactToastify.css'
-import clsx from 'clsx'
-import { usePathname } from '@/libs/hooks/usePathname'
-import { zodResolver } from '@hookform/resolvers/zod'
-import * as zod from 'zod'
-import { useForm } from 'react-hook-form'
-import { IdentitasSekolahSchema } from '@/libs/schema/website/TentangSekolahSchema'
-import {
-  useGetTentangSekolahQuery,
-  useUpdateProfilSekolahMutation,
-} from '@/store/slices/WebsiteProfilAPI'
-import { useNavigate } from 'react-router-dom'
-import {
-  SelectListAkreditasi,
-  SelectListPenyelenggaraan,
-} from '@/components/SelectComponent'
-import Cookies from 'js-cookie'
+// import {
+//   Form,
+//   FormControl,
+//   FormField,
+//   FormItem,
+//   FormMessage,
+// } from '../../../Form'
+// import { FormLabelInput, Input } from '../../../InputComponent'
+// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+// import {
+//   faArrowLeft,
+//   faSave,
+//   faSpinner,
+//   faTrash,
+//   faUpload,
+// } from '@fortawesome/free-solid-svg-icons'
+// import { GetVisiMisiResponse, PostIdentitasSekolahParams } from '@/libs/type'
+// import { useCreateFileMutation } from '@/store/slices/ReferensiAPI'
+// import { useEffect, useState } from 'react'
+// import { Bounce, toast } from 'react-toastify'
+// import clsx from 'clsx'
+// import { usePathname } from '@/libs/hooks/usePathname'
+// import { zodResolver } from '@hookform/resolvers/zod'
+// import * as zod from 'zod'
+// import { useForm } from 'react-hook-form'
+// import { IdentitasSekolahSchema } from '@/libs/schema/website/TentangSekolahSchema'
+// import {
+//   useGetTentangSekolahQuery,
+//   useGetVisiMisiQuery,
+//   useUpdateProfilSekolahMutation,
+// } from '@/store/slices/WebsiteProfilAPI'
+// import { useNavigate } from 'react-router-dom'
+// import {
+//   SelectListAkreditasi,
+//   SelectListPenyelenggaraan,
+// } from '@/components/SelectComponent'
+// import Cookies from 'js-cookie'
 
-export default function FormUpdateIdentitas() {
-  const navigate = useNavigate()
-  const [urls, setUrls] = useState<string>()
+export default function FormVisiMisi() {
+  // const navigate = useNavigate()
+  // const [urls, setUrls] = useState<string>()
 
-  const form = useForm<zod.infer<typeof IdentitasSekolahSchema>>({
-    resolver: zodResolver(IdentitasSekolahSchema),
-    defaultValues: {},
-  })
+  // const form = useForm<zod.infer<typeof IdentitasSekolahSchema>>({
+  //   resolver: zodResolver(IdentitasSekolahSchema),
+  //   defaultValues: {},
+  // })
 
-  const { lastPathname } = usePathname()
+  // const { lastPathname } = usePathname()
   // --- Upload File ---
-  const [
-    uploadFileMutation,
-    {
-      isSuccess: successFile,
-      isError: isErrorFile,
-      error: errorFile,
-      isLoading: loadingFile,
-    },
-  ] = useCreateFileMutation()
+  // const [
+  //   uploadFileMutation,
+  //   {
+  //     isSuccess: successFile,
+  //     isError: isErrorFile,
+  //     error: errorFile,
+  //     isLoading: loadingFile,
+  //   },
+  // ] = useCreateFileMutation()
 
-  const handleUploadFoto = async (file: File) => {
-    const formatData = new FormData()
-    formatData.append('berkas', file)
+  // const handleUploadFoto = async (file: File) => {
+  //   const formatData = new FormData()
+  //   formatData.append('berkas', file)
 
-    try {
-      const res = await uploadFileMutation(formatData)
-      setUrls(res?.data?.url)
-    } catch (e) {
-      console.error(e)
-      toast.error(`Data gagal disimpan`, {
-        position: 'bottom-right',
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: 'light',
-        transition: Bounce,
-      })
-    }
-  }
+  //   try {
+  //     const res = await uploadFileMutation(formatData)
+  //     setUrls(res?.data?.url)
+  //   } catch (e) {
+  //     console.error(e)
+  //     toast.error(`Data gagal disimpan`, {
+  //       position: 'bottom-right',
+  //       autoClose: 5000,
+  //       hideProgressBar: false,
+  //       closeOnClick: true,
+  //       pauseOnHover: true,
+  //       draggable: true,
+  //       progress: undefined,
+  //       theme: 'light',
+  //       transition: Bounce,
+  //     })
+  //   }
+  // }
 
-  useEffect(() => {
-    if (successFile) {
-      toast.success('Berhasil unggah photo!', {
-        position: 'bottom-right',
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: 'light',
-        transition: Bounce,
-      })
-    }
-  }, [successFile])
+  // useEffect(() => {
+  //   if (successFile) {
+  //     toast.success('Berhasil unggah photo!', {
+  //       position: 'bottom-right',
+  //       autoClose: 5000,
+  //       hideProgressBar: false,
+  //       closeOnClick: true,
+  //       pauseOnHover: true,
+  //       draggable: true,
+  //       progress: undefined,
+  //       theme: 'light',
+  //       transition: Bounce,
+  //     })
+  //   }
+  // }, [successFile])
 
-  useEffect(() => {
-    if (isErrorFile) {
-      const errorMsg = errorFile as { data?: { message?: string } }
+  // useEffect(() => {
+  //   if (isErrorFile) {
+  //     const errorMsg = errorFile as { data?: { message?: string } }
 
-      toast.error(`${errorMsg?.data?.message ?? 'Terjadi Kesalahan'}`, {
-        position: 'bottom-right',
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: 'light',
-        transition: Bounce,
-      })
-    }
-  }, [isErrorFile, errorFile])
+  //     toast.error(`${errorMsg?.data?.message ?? 'Terjadi Kesalahan'}`, {
+  //       position: 'bottom-right',
+  //       autoClose: 5000,
+  //       hideProgressBar: false,
+  //       closeOnClick: true,
+  //       pauseOnHover: true,
+  //       draggable: true,
+  //       progress: undefined,
+  //       theme: 'light',
+  //       transition: Bounce,
+  //     })
+  //   }
+  // }, [isErrorFile, errorFile])
 
-  // --- Create Update Profil ---
-  const [
-    createUpdateProfil,
-    {
-      isError: isErrorUpdateProfil,
-      error: errorUpdateProfil,
-      isLoading: isLoadingUpdateProfil,
-      isSuccess: isSuccessUpdateProfil,
-    },
-  ] = useUpdateProfilSekolahMutation()
+  // // --- Create Update Profil ---
+  // const [
+  //   createUpdateProfil,
+  //   {
+  //     isError: isErrorUpdateProfil,
+  //     error: errorUpdateProfil,
+  //     isLoading: isLoadingUpdateProfil,
+  //     isSuccess: isSuccessUpdateProfil,
+  //   },
+  // ] = useUpdateProfilSekolahMutation()
 
-  const handleSubmit = async (values: PostIdentitasSekolahParams) => {
-    const body = {
-      jenis: 'Identitas',
-      sk_pendirian: values?.sk_pendirian ?? '',
-      tgl_sk_pendirian: values?.tgl_sk_pendirian ?? '',
-      sk_operasional: values?.sk_operasional ?? '',
-      tgl_sk_operasional: values?.tgl_sk_operasional ?? '',
-      id_akreditasi: values?.id_akreditasi ?? '',
-      tgl_mulai_akreditasi: values?.tgl_mulai_akreditasi ?? '',
-      tgl_akhir_akreditasi: values?.tgl_akhir_akreditasi ?? '',
-      penyelenggaraan: values?.penyelenggaraan ?? '',
-      penyelenggaraan_mulai: values?.penyelenggaraan_mulai ?? '',
-      penyelenggaraan_akhir: values?.penyelenggaraan_akhir ?? '',
-      nis: values?.nis ?? '',
-      nss: values?.nss ?? '',
-      alamat: values?.alamat ?? '',
-      email: values?.email ?? '',
-      telepon: values?.telepon ?? '',
-      nama_pimpinan: values?.nama_pimpinan ?? '',
-      nip_pimpinan: values?.nip_pimpinan ?? '',
-      photo_pimpinan: urls,
-    }
+  // const handleSubmit = async (values: PostIdentitasSekolahParams) => {
+  //   const body = {
+  //     jenis: 'Identitas',
+  //     sk_pendirian: values?.sk_pendirian ?? '',
+  //     tgl_sk_pendirian: values?.tgl_sk_pendirian ?? '',
+  //     sk_operasional: values?.sk_operasional ?? '',
+  //     tgl_sk_opersioanal: values?.tgl_sk_opersioanal ?? '',
+  //     id_akreditasi: values?.id_akreditasi ?? '',
+  //     tgl_mulai_akreditasi: values?.tgl_mulai_akreditasi ?? '',
+  //     tgl_akhir_akreditasi: values?.tgl_akhir_akreditasi ?? '',
+  //     penyelenggaraan: values?.penyelenggaraan ?? '',
+  //     nis: values?.nis ?? '',
+  //     nss: values?.nss ?? '',
+  //     alamat: values?.alamat ?? '',
+  //     email: values?.email ?? '',
+  //     telepon: values?.telepon ?? '',
+  //     nama_pimpinan: values?.nama_pimpinan ?? '',
+  //     nip_pimpinan: values?.nip_pimpinan ?? '',
+  //     photo_pimpinan: urls,
+  //   }
 
-    try {
-      await createUpdateProfil({ body: body })
-    } catch (error) {
-      console.error(error)
-    }
-  }
+  //   try {
+  //     await createUpdateProfil({ body: body })
+  //   } catch (error) {
+  //     console.error(error)
+  //   }
+  // }
 
-  useEffect(() => {
-    if (isSuccessUpdateProfil) {
-      toast.success(`Update profil berhasil`, {
-        position: 'bottom-right',
-        autoClose: 3000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: 'light',
-        transition: Bounce,
-      })
-      setTimeout(() => {
-        navigate(-1)
-      }, 3000)
-    }
-  }, [isSuccessUpdateProfil])
+  // useEffect(() => {
+  //   if (isSuccessUpdateProfil) {
+  //     toast.success(`Update profil berhasil`, {
+  //       position: 'bottom-right',
+  //       autoClose: 3000,
+  //       hideProgressBar: false,
+  //       closeOnClick: true,
+  //       pauseOnHover: true,
+  //       draggable: true,
+  //       progress: undefined,
+  //       theme: 'light',
+  //       transition: Bounce,
+  //     })
+  //     setTimeout(() => {
+  //       navigate(-1)
+  //     }, 3000)
+  //   }
+  // }, [isSuccessUpdateProfil])
 
-  useEffect(() => {
-    if (isErrorUpdateProfil) {
-      const errorMsg = errorUpdateProfil as { data?: { message?: string } }
+  // useEffect(() => {
+  //   if (isErrorUpdateProfil) {
+  //     const errorMsg = errorUpdateProfil as { data?: { message?: string } }
 
-      toast.error(`${errorMsg?.data?.message ?? 'Terjadi Kesalahan'}`, {
-        position: 'bottom-right',
-        autoClose: 3000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: 'light',
-        transition: Bounce,
-      })
-    }
-  }, [isErrorUpdateProfil, errorUpdateProfil])
+  //     toast.error(`${errorMsg?.data?.message ?? 'Terjadi Kesalahan'}`, {
+  //       position: 'bottom-right',
+  //       autoClose: 3000,
+  //       hideProgressBar: false,
+  //       closeOnClick: true,
+  //       pauseOnHover: true,
+  //       draggable: true,
+  //       progress: undefined,
+  //       theme: 'light',
+  //       transition: Bounce,
+  //     })
+  //   }
+  // }, [isErrorUpdateProfil, errorUpdateProfil])
 
-  // --- Data Tentang ---
-  const [dataTentang, setDataTentang] = useState<GetTentangSekolahResponse>()
+  // --- Data VisiMisi ---
+  // const [dataVisiMisi, setDataVisiMisi] = useState<GetVisiMisiResponse>()
 
-  const {
-    data: dataTentangSekolah,
-    isError: isErrorTentangSekolah,
-    error: errorTentangSekolah,
-  } = useGetTentangSekolahQuery()
+  // const {
+  //   data: dataVisiMisiSekolah,
+  //   isError: isErrorVisiMisiSekolah,
+  //   error: errorVisiMisiSekolah,
+  // } = useGetVisiMisiQuery()
 
-  useEffect(() => {
-    if (dataTentangSekolah?.data) {
-      setDataTentang(dataTentangSekolah?.data)
-    }
-  }, [dataTentangSekolah?.data])
+  // useEffect(() => {
+  //   if (dataVisiMisiSekolah?.data) {
+  //     setDataVisiMisi(dataVisiMisiSekolah?.data)
+  //   }
+  // }, [dataVisiMisiSekolah?.data])
 
-  useEffect(() => {
-    if (isErrorTentangSekolah) {
-      const errorMsg = errorTentangSekolah as { data?: { message?: string } }
+  // useEffect(() => {
+  //   if (isErrorVisiMisiSekolah) {
+  //     const errorMsg = errorVisiMisiSekolah as { data?: { message?: string } }
 
-      toast.error(`${errorMsg?.data?.message ?? 'Terjadi Kesalahan'}`, {
-        position: 'bottom-right',
-        autoClose: 3000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: 'light',
-        transition: Bounce,
-      })
+  //     toast.error(`${errorMsg?.data?.message ?? 'Terjadi Kesalahan'}`, {
+  //       position: 'bottom-right',
+  //       autoClose: 3000,
+  //       hideProgressBar: false,
+  //       closeOnClick: true,
+  //       pauseOnHover: true,
+  //       draggable: true,
+  //       progress: undefined,
+  //       theme: 'light',
+  //       transition: Bounce,
+  //     })
 
-      if (errorMsg?.data?.message?.includes('Token')) {
-        setTimeout(() => {
-          Cookies.remove('token')
-          navigate(`/`)
-        }, 5000)
-      }
-    }
-  }, [isErrorTentangSekolah, errorTentangSekolah])
+  //     if (errorMsg?.data?.message?.includes('Token')) {
+  //       setTimeout(() => {
+  //         Cookies.remove('token')
+  //         navigate(`/`)
+  //       }, 5000)
+  //     }
+  //   }
+  // }, [isErrorVisiMisiSekolah, errorVisiMisiSekolah])
 
-  useEffect(() => {
-    if (dataTentang?.identitas) {
-      const identitas = dataTentang?.identitas
+  // useEffect(() => {
+  //   if (dataVisiMisi?.identitas) {
+  //     const identitas = dataVisiMisi?.identitas
 
-      form.setValue('sk_pendirian', identitas?.sk_pendirian)
-      const tglSKPendirian = identitas?.tgl_sk_pendirian
-      const splitSKPendirian = tglSKPendirian?.split('-')
-      form.setValue(
-        'tgl_sk_pendirian',
-        `${splitSKPendirian?.[0]}-${splitSKPendirian?.[1]}-${splitSKPendirian?.[2]}`,
-      )
+  //     form.setValue('sk_pendirian', identitas?.sk_pendirian)
+  //     const tglSKPendirian = identitas?.tgl_sk_pendirian
+  //     const splitSKPendirian = tglSKPendirian?.split('-')
+  //     form.setValue(
+  //       'tgl_sk_pendirian',
+  //       `${splitSKPendirian?.[0]}-${splitSKPendirian?.[1]}-${splitSKPendirian?.[2]}`,
+  //     )
 
-      form.setValue('sk_operasional', identitas?.sk_operasional)
+  //     form.setValue('sk_operasional', identitas?.sk_operasional)
 
-      const tglSKOperasional = identitas?.tgl_sk_operasional
-      const splitSKOperasional = tglSKOperasional?.split('-')
-      form.setValue(
-        'tgl_sk_operasional',
-        `${splitSKOperasional?.[0]}-${splitSKOperasional?.[1]}-${splitSKOperasional?.[2]}`,
-      )
+  //     const tglSKOperasional = identitas?.tgl_sk_operasional
+  //     const splitSKOperasional = tglSKOperasional?.split('-')
+  //     form.setValue(
+  //       'tgl_sk_operasional',
+  //       `${splitSKOperasional?.[0]}-${splitSKOperasional?.[1]}-${splitSKOperasional?.[2]}`,
+  //     )
 
-      const tglMulai = identitas?.tgl_mulai_akreditasi
-      const splitTglMulai = tglMulai?.split('-')
-      form.setValue(
-        'tgl_mulai_akreditasi',
-        `${splitTglMulai?.[0]}-${splitTglMulai?.[1]}-${splitTglMulai?.[2]}`,
-      )
+  //     const tglMulai = identitas?.tgl_mulai_akreditasi
+  //     const splitTglMulai = tglMulai?.split('-')
+  //     form.setValue(
+  //       'tgl_mulai_akreditasi',
+  //       `${splitTglMulai?.[0]}-${splitTglMulai?.[1]}-${splitTglMulai?.[2]}`,
+  //     )
 
-      const tglAkhir = identitas?.tgl_akhir_akreditasi
-      const splitTglAkhir = tglAkhir?.split('-')
-      form.setValue(
-        'tgl_akhir_akreditasi',
-        `${splitTglAkhir?.[0]}-${splitTglAkhir?.[1]}-${splitTglAkhir?.[2]}`,
-      )
+  //     const tglAkhir = identitas?.tgl_akhir_akreditasi
+  //     const splitTglAkhir = tglAkhir?.split('-')
+  //     form.setValue(
+  //       'tgl_akhir_akreditasi',
+  //       `${splitTglAkhir?.[0]}-${splitTglAkhir?.[1]}-${splitTglAkhir?.[2]}`,
+  //     )
 
-      form.setValue('nis', identitas?.nis)
-      form.setValue('nss', identitas?.nss)
-      form.setValue('alamat', identitas?.alamat)
-      form.setValue('email', identitas?.email)
-      form.setValue('email', identitas?.email)
-      form.setValue('telepon', identitas?.telepon)
-      form.setValue('id_akreditasi', identitas?.id_akreditasi)
-      form.setValue('penyelenggaraan', identitas?.penyelenggaraan)
-      form.setValue('photo_pimpinan', identitas?.photo_pimpinan)
-      setUrls(identitas?.photo_pimpinan)
-      form.setValue('nama_pimpinan', identitas?.nama_pimpinan)
-      form.setValue('nip_pimpinan', identitas?.nip_pimpinan)
-      form.setValue('penyelenggaraan_mulai', identitas?.penyelenggaraan_mulai)
-      form.setValue('penyelenggaraan_akhir', identitas?.penyelenggaraan_akhir)
-    }
-  }, [dataTentang?.identitas])
+  //     form.setValue('nis', identitas?.nis)
+  //     form.setValue('nss', identitas?.nss)
+  //     form.setValue('alamat', identitas?.alamat)
+  //     form.setValue('email', identitas?.email)
+  //     form.setValue('email', identitas?.email)
+  //     form.setValue('telepon', identitas?.telepon)
+  //     form.setValue('id_akreditasi', identitas?.akreditasi)
+  //     form.setValue('penyelenggaraan', identitas?.penyelenggaraan)
+  //     form.setValue('photo_pimpinan', identitas?.photo_pimpinan)
+  //     setUrls(identitas?.photo_pimpinan)
+  //     form.setValue('nama_pimpinan', identitas?.nama_pimpinan)
+  //     form.setValue('nip_pimpinan', identitas?.nip_pimpinan)
+  //   }
+  // }, [dataVisiMisi?.identitas])
 
   return (
     <div className="scrollbar flex h-full flex-col gap-32 overflow-y-auto rounded-3x bg-white p-48">
-      <div className="flex">
+      {/* <div className="flex">
         <div
           onClick={() => navigate(-1)}
           className="items-centere flex gap-12 rounded-2xl bg-warna-dark px-24 py-12 text-white hover:cursor-pointer hover:bg-opacity-80"
@@ -297,9 +290,9 @@ export default function FormUpdateIdentitas() {
           <FontAwesomeIcon icon={faArrowLeft} />
           Kembali
         </div>
-      </div>
+      </div> */}
       <p className="font-roboto text-[2.4rem]">Form Update Identitas</p>
-      <Form {...form}>
+      {/* <Form {...form}>
         <form
           className="scrollbar flex flex-1 flex-col gap-32 overflow-y-auto"
           onSubmit={form.handleSubmit(handleSubmit)}
@@ -359,32 +352,10 @@ export default function FormUpdateIdentitas() {
             />
             <SelectListPenyelenggaraan
               useFormReturn={form}
-              headerLabel="Penyelenggaraan"
-              placeholder="Pilih Penyelenggaraan"
+              headerLabel="Penyelenggara"
+              placeholder="Pilih Penyelenggara"
               name="penyelenggaraan"
               className="w-1/2 hover:cursor-not-allowed phones:w-full"
-              isDisabled={isLoadingUpdateProfil}
-            />
-          </div>
-
-          <div className="flex gap-64 phones:flex-col phones:gap-32">
-            <FormLabelInput
-              name="penyelenggaraan_mulai"
-              form={form}
-              label="Tanggal Mulai Penyelenggaraan"
-              placeholder="Masukkan Tanggal Mulai Penyelenggaraan"
-              className="text-sim-dark"
-              type="time"
-              isDisabled={isLoadingUpdateProfil}
-            />
-
-            <FormLabelInput
-              name="penyelenggaraan_akhir"
-              form={form}
-              label="Tanggal Akhir Penyelenggaraan"
-              placeholder="Masukkan Tanggal Akhir Penyelenggaraan"
-              className="text-sim-dark"
-              type="time"
               isDisabled={isLoadingUpdateProfil}
             />
           </div>
@@ -490,7 +461,6 @@ export default function FormUpdateIdentitas() {
               placeholder="NIP Pimpinan"
               className="text-sim-dark"
               type="text"
-              isNumber
               isDisabled={isLoadingUpdateProfil}
             />
           </div>
@@ -608,8 +578,7 @@ export default function FormUpdateIdentitas() {
             </button>
           </div>
         </form>
-      </Form>
-      <ToastContainer />
+      </Form> */}
     </div>
   )
 }

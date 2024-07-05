@@ -3,6 +3,8 @@ import { IdentitasSekolahType } from '@/libs/type'
 import { faPencil } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useNavigate } from 'react-router-dom'
+import dayjs from 'dayjs'
+import 'dayjs/locale/id'
 
 export function IdentitasSekolah({ data }: { data: IdentitasSekolahType }) {
   const navigate = useNavigate()
@@ -51,7 +53,9 @@ export function IdentitasSekolah({ data }: { data: IdentitasSekolahType }) {
           />
           <LabelComponent
             label="Tanggal SK Pendirian"
-            value={data?.tgl_sk_pendirian}
+            value={dayjs(data?.tgl_sk_pendirian)
+              .locale('id')
+              .format('DD MMMM YYYY')}
             widthLabel="w-1/4"
             widthValue="w-3/4"
           />
@@ -63,7 +67,9 @@ export function IdentitasSekolah({ data }: { data: IdentitasSekolahType }) {
           />
           <LabelComponent
             label="Tanggal SK Operasional"
-            value={data?.tgl_sk_operasional}
+            value={dayjs(data?.tgl_sk_operasional)
+              .locale('id')
+              .format('DD MMMM YYYY')}
             widthLabel="w-1/4"
             widthValue="w-3/4"
           />
@@ -76,7 +82,9 @@ export function IdentitasSekolah({ data }: { data: IdentitasSekolahType }) {
           {data?.tgl_mulai_akreditasi && (
             <LabelComponent
               label="Tanggal Mulai Akreditasi"
-              value={data?.tgl_mulai_akreditasi}
+              value={dayjs(data?.tgl_mulai_akreditasi)
+                .locale('id')
+                .format('DD MMMM YYYY')}
               widthLabel="w-1/4"
               widthValue="w-3/4"
             />
@@ -85,7 +93,9 @@ export function IdentitasSekolah({ data }: { data: IdentitasSekolahType }) {
           {data?.tgl_akhir_akreditasi && (
             <LabelComponent
               label="Tanggal Akhir Akreditasi"
-              value={data?.tgl_akhir_akreditasi}
+              value={dayjs(data?.tgl_akhir_akreditasi)
+                ?.locale('id')
+                .format('DD MMMM YYYY')}
               widthLabel="w-1/4"
               widthValue="w-3/4"
             />
@@ -95,6 +105,24 @@ export function IdentitasSekolah({ data }: { data: IdentitasSekolahType }) {
             <LabelComponent
               label="Penyelenggaraan"
               value={data?.penyelenggaraan}
+              widthLabel="w-1/4"
+              widthValue="w-3/4"
+            />
+          )}
+
+          {data?.penyelenggaraan_mulai && (
+            <LabelComponent
+              label="Penyelenggaraan Mulai"
+              value={data?.penyelenggaraan_mulai?.substring(0, 5)}
+              widthLabel="w-1/4"
+              widthValue="w-3/4"
+            />
+          )}
+
+          {data?.penyelenggaraan_akhir && (
+            <LabelComponent
+              label="Penyelenggaraan Akhir"
+              value={data?.penyelenggaraan_akhir?.substring(0, 5)}
               widthLabel="w-1/4"
               widthValue="w-3/4"
             />
