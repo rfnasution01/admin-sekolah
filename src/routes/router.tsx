@@ -6,6 +6,7 @@ import {
   RootLayout,
   TambahProfilSekolahPage,
   TentangSekolahPage,
+  UpdateIdentitasSekolahPage,
   VisiMisiPage,
   WebsiteLayout,
 } from './loadables'
@@ -64,6 +65,10 @@ export const router = createBrowserRouter([
                   {
                     path: ':aksi',
                     element: <TambahProfilSekolahPage />,
+                  },
+                  {
+                    path: 'identitas',
+                    element: <UpdateIdentitasSekolahPage />,
                   },
                 ],
               },

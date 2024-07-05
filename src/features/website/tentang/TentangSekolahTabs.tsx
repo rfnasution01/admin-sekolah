@@ -43,26 +43,31 @@ export function TentangSekolahTab({
       >
         Identitas
       </div>
-      {dataTentang?.profil?.map((item, idx) => (
-        <div
-          onClick={() => {
-            localStorage.setItem('tentangSekolahID', item?.jenis?.toLowerCase())
-            setMenu(item?.jenis?.toLowerCase())
-          }}
-          className={clsx(
-            'pb-12 transition-all duration-300 ease-in-out hover:cursor-pointer hover:border-b-2 hover:border-warna-dark hover:text-warna-dark',
-            {
-              'border-b-2 border-warna-dark text-warna-dark':
-                menu === item?.jenis?.toLowerCase(),
-              'border-b-2 border-transparent text-warna-grey':
-                menu !== item?.jenis?.toLowerCase(),
-            },
-          )}
-          key={idx}
-        >
-          {item?.jenis}
-        </div>
-      ))}
+      <div className="flex items-center gap-32">
+        {dataTentang?.profil?.map((item, idx) => (
+          <div
+            onClick={() => {
+              localStorage.setItem(
+                'tentangSekolahID',
+                item?.jenis?.toLowerCase(),
+              )
+              setMenu(item?.jenis?.toLowerCase())
+            }}
+            className={clsx(
+              'pb-12 transition-all duration-300 ease-in-out hover:cursor-pointer hover:border-b-2 hover:border-warna-dark hover:text-warna-dark',
+              {
+                'border-b-2 border-warna-dark text-warna-dark':
+                  menu === item?.jenis?.toLowerCase(),
+                'border-b-2 border-transparent text-warna-grey':
+                  menu !== item?.jenis?.toLowerCase(),
+              },
+            )}
+            key={idx}
+          >
+            {item?.jenis ?? '-'}
+          </div>
+        ))}
+      </div>
       {dataTentang?.profil?.length < jenisProfil?.length && (
         <Link
           to={`tambah`}

@@ -20,6 +20,10 @@ export const TambahProfilSekolahPage = loadable(
   () => import('@/features/website/tentang/TambahProfil'),
 )
 
+export const UpdateIdentitasSekolahPage = loadable(
+  () => import('@/components/FormComponent/website/profil/FormUpdateIdentitas'),
+)
+
 export const VisiMisiPage = loadable(
   () => import('@/pages/Website/Profil/VisiMisi'),
 )

@@ -1,6 +1,7 @@
 import {
   GetTentangSekolahResponse,
   GetVisiMisiResponse,
+  PostIdentitasSekolahParams,
   PostTentangProfilParams,
 } from '@/libs/type'
 import { Res, api } from '../api'
@@ -17,6 +18,17 @@ export const WebsiteProfilEndpoints = api.injectEndpoints({
     createTentangSekolah: builder.mutation<
       void,
       { body: PostTentangProfilParams }
+    >({
+      query: ({ body }) => ({
+        url: `admin/website/profil/tentang`,
+        method: 'POST',
+        body: body,
+      }),
+      invalidatesTags: ['profil-tentang'],
+    }),
+    updateProfilSekolah: builder.mutation<
+      void,
+      { body: PostIdentitasSekolahParams }
     >({
       query: ({ body }) => ({
         url: `admin/website/profil/tentang`,
@@ -46,4 +58,5 @@ export const {
   useGetVisiMisiQuery,
   useCreateTentangSekolahMutation,
   useDeleteTentangSekolahMutation,
+  useUpdateProfilSekolahMutation,
 } = WebsiteProfilEndpoints

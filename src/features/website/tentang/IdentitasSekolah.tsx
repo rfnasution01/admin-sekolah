@@ -2,8 +2,10 @@ import { LabelComponent } from '@/components/LabelComponent'
 import { IdentitasSekolahType } from '@/libs/type'
 import { faPencil } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { useNavigate } from 'react-router-dom'
 
 export function IdentitasSekolah({ data }: { data: IdentitasSekolahType }) {
+  const navigate = useNavigate()
   return (
     <div className="scrollbar flex h-full w-full flex-col gap-32 overflow-y-auto">
       {/* --- Header --- */}
@@ -11,6 +13,9 @@ export function IdentitasSekolah({ data }: { data: IdentitasSekolahType }) {
         <p className="font-roboto text-[3.2rem]">Identitas Sekolah</p>
         <button
           type="button"
+          onClick={() => {
+            navigate('identitas')
+          }}
           className="flex items-center gap-12 rounded-2xl bg-warna-dark px-24 py-12 text-white hover:bg-opacity-80"
         >
           <FontAwesomeIcon icon={faPencil} />
@@ -53,6 +58,12 @@ export function IdentitasSekolah({ data }: { data: IdentitasSekolahType }) {
           <LabelComponent
             label="SK Operasional"
             value={data?.sk_operasional}
+            widthLabel="w-1/4"
+            widthValue="w-3/4"
+          />
+          <LabelComponent
+            label="Tanggal SK Operasional"
+            value={data?.tgl_sk_operasional}
             widthLabel="w-1/4"
             widthValue="w-3/4"
           />
