@@ -110,7 +110,7 @@ export default function TambahProfil() {
       keterangan: values?.keterangan ?? '',
       sub_keterangan: values?.sub_keterangan ?? '',
       gambar_url: urls ?? '',
-      list: values?.list,
+      list: values?.list ?? [],
     }
 
     try {

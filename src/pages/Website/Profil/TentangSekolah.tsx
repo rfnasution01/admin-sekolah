@@ -19,7 +19,7 @@ import { GetTentangSekolahResponse } from '@/libs/type'
 
 export default function TentangSekolah() {
   const navigate = useNavigate()
-  const tentangSekolahParams = localStorage.getItem('tentangSekolahID')
+  const sekolahParams = localStorage.getItem('sekolahID')
 
   const [dataTentang, setDataTentang] = useState<GetTentangSekolahResponse>()
 
@@ -65,8 +65,9 @@ export default function TentangSekolah() {
     }
   }, [isErrorTentangSekolah, errorTentangSekolah])
 
-  const [menu, setMenu] = useState<string>(tentangSekolahParams ?? 'identitas')
+  const [menu, setMenu] = useState<string>(sekolahParams ?? 'identitas')
 
+  // --- Delete ---
   const [
     deleteTentang,
     {

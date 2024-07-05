@@ -36,14 +36,6 @@ export type ProfilSekolahType = {
   list: List[]
 }
 
-export type GetVisiMisiResponse = {
-  jenis: string
-  keterangan: string
-  sub_keterangan: string
-  gambar_url: string
-  list: List[]
-}
-
 export type List = {
   id: string
   keterangan: string

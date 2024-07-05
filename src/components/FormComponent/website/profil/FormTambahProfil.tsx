@@ -211,7 +211,7 @@ export function FormTambahProfil({
                     id="berkas"
                     type="file"
                     value={''}
-                    // disabled={isLoadingUpload || loadingFile}
+                    disabled={isLoading || loadingFile}
                     placeholder="Lampiran"
                     onChange={(e) => {
                       if (e.target.files[0].size > 5 * 1000000) {

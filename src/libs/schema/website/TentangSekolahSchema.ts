@@ -67,3 +67,11 @@ export const IdentitasSekolahSchema = zod.object({
   penyelenggaraan_mulai: zod.string().optional().nullable().nullish(),
   penyelenggaraan_akhir: zod.string().optional().nullable().nullish(),
 })
+
+export const VisiMisiSchema = zod.object({
+  jenis: zod.string().optional().nullable().nullish(),
+  keterangan: zod.string().optional().nullable().nullish(),
+  sub_keterangan: zod.string().optional().nullable().nullish(),
+  gambar_url: zod.string().optional().nullable().nullish(),
+  list: zod.array(ListSchema).optional().nullable(),
+})

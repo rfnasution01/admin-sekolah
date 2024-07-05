@@ -22,7 +22,7 @@ export const LoginEndpoints = api.injectEndpoints({
         method: 'POST',
         body: data,
       }),
-      invalidatesTags: [],
+      invalidatesTags: ['website-profil-tentang', 'website-profil-visimisi'],
     }),
   }),
 })

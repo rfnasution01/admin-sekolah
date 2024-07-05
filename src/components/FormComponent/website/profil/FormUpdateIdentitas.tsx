@@ -597,7 +597,7 @@ export default function FormUpdateIdentitas() {
               type="submit"
               className="flex items-center justify-center gap-12 rounded-2xl bg-warna-primary px-32 py-12 text-white"
             >
-              <p>{lastPathname === 'edit' ? 'Edit' : 'Tambah'}</p>
+              <p>{lastPathname === 'edit' ? 'Edit' : 'Simpan'}</p>
               {isLoadingUpdateProfil ? (
                 <span className="animate-spin duration-300">
                   <FontAwesomeIcon icon={faSpinner} />

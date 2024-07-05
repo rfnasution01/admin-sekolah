@@ -25,5 +25,5 @@ export const UpdateIdentitasSekolahPage = loadable(
 )
 
 export const VisiMisiPage = loadable(
-  () => import('@/components/FormComponent/website/profil/FormVisiMisi'),
+  () => import('@/pages/Website/Profil/VisiMisi'),
 )

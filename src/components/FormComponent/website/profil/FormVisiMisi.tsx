@@ -1,472 +1,215 @@
-// import {
-//   Form,
-//   FormControl,
-//   FormField,
-//   FormItem,
-//   FormMessage,
-// } from '../../../Form'
-// import { FormLabelInput, Input } from '../../../InputComponent'
-// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-// import {
-//   faArrowLeft,
-//   faSave,
-//   faSpinner,
-//   faTrash,
-//   faUpload,
-// } from '@fortawesome/free-solid-svg-icons'
-// import { GetVisiMisiResponse, PostIdentitasSekolahParams } from '@/libs/type'
-// import { useCreateFileMutation } from '@/store/slices/ReferensiAPI'
-// import { useEffect, useState } from 'react'
-// import { Bounce, toast } from 'react-toastify'
-// import clsx from 'clsx'
-// import { usePathname } from '@/libs/hooks/usePathname'
-// import { zodResolver } from '@hookform/resolvers/zod'
-// import * as zod from 'zod'
-// import { useForm } from 'react-hook-form'
-// import { IdentitasSekolahSchema } from '@/libs/schema/website/TentangSekolahSchema'
-// import {
-//   useGetTentangSekolahQuery,
-//   useGetVisiMisiQuery,
-//   useUpdateProfilSekolahMutation,
-// } from '@/store/slices/WebsiteProfilAPI'
-// import { useNavigate } from 'react-router-dom'
-// import {
-//   SelectListAkreditasi,
-//   SelectListPenyelenggaraan,
-// } from '@/components/SelectComponent'
-// import Cookies from 'js-cookie'
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormMessage,
+} from '../../../Form'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import {
+  faPlus,
+  faSave,
+  faSpinner,
+  faTrash,
+  faUpload,
+} from '@fortawesome/free-solid-svg-icons'
+import { PostTentangProfilParams, ProfilSekolahType } from '@/libs/type'
+import { useCreateFileMutation } from '@/store/slices/ReferensiAPI'
+import { Dispatch, SetStateAction, useEffect } from 'react'
+import { Bounce, toast } from 'react-toastify'
+import { usePathname } from '@/libs/hooks/usePathname'
+import { useFieldArray, UseFormReturn } from 'react-hook-form'
+import { FormLabelInput, Input } from '@/components/InputComponent'
+import clsx from 'clsx'
 
-export default function FormVisiMisi() {
-  // const navigate = useNavigate()
-  // const [urls, setUrls] = useState<string>()
-
-  // const form = useForm<zod.infer<typeof IdentitasSekolahSchema>>({
-  //   resolver: zodResolver(IdentitasSekolahSchema),
-  //   defaultValues: {},
-  // })
-
-  // const { lastPathname } = usePathname()
+export function FormVisiMisi({
+  jenis,
+  data,
+  handleSubmit,
+  isLoading,
+  setUrls,
+  urls,
+  form,
+}: {
+  jenis: string
+  data: ProfilSekolahType
+  handleSubmit: (values: PostTentangProfilParams) => Promise<void>
+  isLoading: boolean
+  setUrls: Dispatch<SetStateAction<string>>
+  urls: string
+  form: UseFormReturn
+}) {
+  const { lastPathname } = usePathname()
   // --- Upload File ---
-  // const [
-  //   uploadFileMutation,
-  //   {
-  //     isSuccess: successFile,
-  //     isError: isErrorFile,
-  //     error: errorFile,
-  //     isLoading: loadingFile,
-  //   },
-  // ] = useCreateFileMutation()
+  const [
+    uploadFileMutation,
+    {
+      isSuccess: successFile,
+      isError: isErrorFile,
+      error: errorFile,
+      isLoading: loadingFile,
+    },
+  ] = useCreateFileMutation()
 
-  // const handleUploadFoto = async (file: File) => {
-  //   const formatData = new FormData()
-  //   formatData.append('berkas', file)
+  const handleUploadFoto = async (file: File) => {
+    const formatData = new FormData()
+    formatData.append('berkas', file)
 
-  //   try {
-  //     const res = await uploadFileMutation(formatData)
-  //     setUrls(res?.data?.url)
-  //   } catch (e) {
-  //     console.error(e)
-  //     toast.error(`Data gagal disimpan`, {
-  //       position: 'bottom-right',
-  //       autoClose: 5000,
-  //       hideProgressBar: false,
-  //       closeOnClick: true,
-  //       pauseOnHover: true,
-  //       draggable: true,
-  //       progress: undefined,
-  //       theme: 'light',
-  //       transition: Bounce,
-  //     })
-  //   }
-  // }
+    try {
+      const res = await uploadFileMutation(formatData)
+      setUrls(res?.data?.url)
+    } catch (e) {
+      console.error(e)
+      toast.error(`Data gagal disimpan`, {
+        position: 'bottom-right',
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: 'light',
+        transition: Bounce,
+      })
+    }
+  }
 
-  // useEffect(() => {
-  //   if (successFile) {
-  //     toast.success('Berhasil unggah photo!', {
-  //       position: 'bottom-right',
-  //       autoClose: 5000,
-  //       hideProgressBar: false,
-  //       closeOnClick: true,
-  //       pauseOnHover: true,
-  //       draggable: true,
-  //       progress: undefined,
-  //       theme: 'light',
-  //       transition: Bounce,
-  //     })
-  //   }
-  // }, [successFile])
+  useEffect(() => {
+    if (successFile) {
+      toast.success('Berhasil unggah photo!', {
+        position: 'bottom-right',
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: 'light',
+        transition: Bounce,
+      })
+    }
+  }, [successFile])
 
-  // useEffect(() => {
-  //   if (isErrorFile) {
-  //     const errorMsg = errorFile as { data?: { message?: string } }
+  useEffect(() => {
+    if (isErrorFile) {
+      const errorMsg = errorFile as { data?: { message?: string } }
 
-  //     toast.error(`${errorMsg?.data?.message ?? 'Terjadi Kesalahan'}`, {
-  //       position: 'bottom-right',
-  //       autoClose: 5000,
-  //       hideProgressBar: false,
-  //       closeOnClick: true,
-  //       pauseOnHover: true,
-  //       draggable: true,
-  //       progress: undefined,
-  //       theme: 'light',
-  //       transition: Bounce,
-  //     })
-  //   }
-  // }, [isErrorFile, errorFile])
+      toast.error(`${errorMsg?.data?.message ?? 'Terjadi Kesalahan'}`, {
+        position: 'bottom-right',
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: 'light',
+        transition: Bounce,
+      })
+    }
+  }, [isErrorFile, errorFile])
 
-  // // --- Create Update Profil ---
-  // const [
-  //   createUpdateProfil,
-  //   {
-  //     isError: isErrorUpdateProfil,
-  //     error: errorUpdateProfil,
-  //     isLoading: isLoadingUpdateProfil,
-  //     isSuccess: isSuccessUpdateProfil,
-  //   },
-  // ] = useUpdateProfilSekolahMutation()
+  const { fields, append, remove } = useFieldArray({
+    control: form.control,
+    name: 'list',
+  })
 
-  // const handleSubmit = async (values: PostIdentitasSekolahParams) => {
-  //   const body = {
-  //     jenis: 'Identitas',
-  //     sk_pendirian: values?.sk_pendirian ?? '',
-  //     tgl_sk_pendirian: values?.tgl_sk_pendirian ?? '',
-  //     sk_operasional: values?.sk_operasional ?? '',
-  //     tgl_sk_opersioanal: values?.tgl_sk_opersioanal ?? '',
-  //     id_akreditasi: values?.id_akreditasi ?? '',
-  //     tgl_mulai_akreditasi: values?.tgl_mulai_akreditasi ?? '',
-  //     tgl_akhir_akreditasi: values?.tgl_akhir_akreditasi ?? '',
-  //     penyelenggaraan: values?.penyelenggaraan ?? '',
-  //     nis: values?.nis ?? '',
-  //     nss: values?.nss ?? '',
-  //     alamat: values?.alamat ?? '',
-  //     email: values?.email ?? '',
-  //     telepon: values?.telepon ?? '',
-  //     nama_pimpinan: values?.nama_pimpinan ?? '',
-  //     nip_pimpinan: values?.nip_pimpinan ?? '',
-  //     photo_pimpinan: urls,
-  //   }
-
-  //   try {
-  //     await createUpdateProfil({ body: body })
-  //   } catch (error) {
-  //     console.error(error)
-  //   }
-  // }
-
-  // useEffect(() => {
-  //   if (isSuccessUpdateProfil) {
-  //     toast.success(`Update profil berhasil`, {
-  //       position: 'bottom-right',
-  //       autoClose: 3000,
-  //       hideProgressBar: false,
-  //       closeOnClick: true,
-  //       pauseOnHover: true,
-  //       draggable: true,
-  //       progress: undefined,
-  //       theme: 'light',
-  //       transition: Bounce,
-  //     })
-  //     setTimeout(() => {
-  //       navigate(-1)
-  //     }, 3000)
-  //   }
-  // }, [isSuccessUpdateProfil])
-
-  // useEffect(() => {
-  //   if (isErrorUpdateProfil) {
-  //     const errorMsg = errorUpdateProfil as { data?: { message?: string } }
-
-  //     toast.error(`${errorMsg?.data?.message ?? 'Terjadi Kesalahan'}`, {
-  //       position: 'bottom-right',
-  //       autoClose: 3000,
-  //       hideProgressBar: false,
-  //       closeOnClick: true,
-  //       pauseOnHover: true,
-  //       draggable: true,
-  //       progress: undefined,
-  //       theme: 'light',
-  //       transition: Bounce,
-  //     })
-  //   }
-  // }, [isErrorUpdateProfil, errorUpdateProfil])
-
-  // --- Data VisiMisi ---
-  // const [dataVisiMisi, setDataVisiMisi] = useState<GetVisiMisiResponse>()
-
-  // const {
-  //   data: dataVisiMisiSekolah,
-  //   isError: isErrorVisiMisiSekolah,
-  //   error: errorVisiMisiSekolah,
-  // } = useGetVisiMisiQuery()
-
-  // useEffect(() => {
-  //   if (dataVisiMisiSekolah?.data) {
-  //     setDataVisiMisi(dataVisiMisiSekolah?.data)
-  //   }
-  // }, [dataVisiMisiSekolah?.data])
-
-  // useEffect(() => {
-  //   if (isErrorVisiMisiSekolah) {
-  //     const errorMsg = errorVisiMisiSekolah as { data?: { message?: string } }
-
-  //     toast.error(`${errorMsg?.data?.message ?? 'Terjadi Kesalahan'}`, {
-  //       position: 'bottom-right',
-  //       autoClose: 3000,
-  //       hideProgressBar: false,
-  //       closeOnClick: true,
-  //       pauseOnHover: true,
-  //       draggable: true,
-  //       progress: undefined,
-  //       theme: 'light',
-  //       transition: Bounce,
-  //     })
-
-  //     if (errorMsg?.data?.message?.includes('Token')) {
-  //       setTimeout(() => {
-  //         Cookies.remove('token')
-  //         navigate(`/`)
-  //       }, 5000)
-  //     }
-  //   }
-  // }, [isErrorVisiMisiSekolah, errorVisiMisiSekolah])
-
-  // useEffect(() => {
-  //   if (dataVisiMisi?.identitas) {
-  //     const identitas = dataVisiMisi?.identitas
-
-  //     form.setValue('sk_pendirian', identitas?.sk_pendirian)
-  //     const tglSKPendirian = identitas?.tgl_sk_pendirian
-  //     const splitSKPendirian = tglSKPendirian?.split('-')
-  //     form.setValue(
-  //       'tgl_sk_pendirian',
-  //       `${splitSKPendirian?.[0]}-${splitSKPendirian?.[1]}-${splitSKPendirian?.[2]}`,
-  //     )
-
-  //     form.setValue('sk_operasional', identitas?.sk_operasional)
-
-  //     const tglSKOperasional = identitas?.tgl_sk_operasional
-  //     const splitSKOperasional = tglSKOperasional?.split('-')
-  //     form.setValue(
-  //       'tgl_sk_operasional',
-  //       `${splitSKOperasional?.[0]}-${splitSKOperasional?.[1]}-${splitSKOperasional?.[2]}`,
-  //     )
-
-  //     const tglMulai = identitas?.tgl_mulai_akreditasi
-  //     const splitTglMulai = tglMulai?.split('-')
-  //     form.setValue(
-  //       'tgl_mulai_akreditasi',
-  //       `${splitTglMulai?.[0]}-${splitTglMulai?.[1]}-${splitTglMulai?.[2]}`,
-  //     )
-
-  //     const tglAkhir = identitas?.tgl_akhir_akreditasi
-  //     const splitTglAkhir = tglAkhir?.split('-')
-  //     form.setValue(
-  //       'tgl_akhir_akreditasi',
-  //       `${splitTglAkhir?.[0]}-${splitTglAkhir?.[1]}-${splitTglAkhir?.[2]}`,
-  //     )
-
-  //     form.setValue('nis', identitas?.nis)
-  //     form.setValue('nss', identitas?.nss)
-  //     form.setValue('alamat', identitas?.alamat)
-  //     form.setValue('email', identitas?.email)
-  //     form.setValue('email', identitas?.email)
-  //     form.setValue('telepon', identitas?.telepon)
-  //     form.setValue('id_akreditasi', identitas?.akreditasi)
-  //     form.setValue('penyelenggaraan', identitas?.penyelenggaraan)
-  //     form.setValue('photo_pimpinan', identitas?.photo_pimpinan)
-  //     setUrls(identitas?.photo_pimpinan)
-  //     form.setValue('nama_pimpinan', identitas?.nama_pimpinan)
-  //     form.setValue('nip_pimpinan', identitas?.nip_pimpinan)
-  //   }
-  // }, [dataVisiMisi?.identitas])
+  useEffect(() => {
+    if (data) {
+      form.setValue('keterangan', data?.keterangan)
+      form.setValue('sub_keterangan', data?.sub_keterangan)
+      form.setValue('jenis', data?.jenis)
+      form.setValue('gambar_url', data?.gambar_url)
+      setUrls(data?.gambar_url)
+      form.setValue('list', data?.list)
+    }
+  }, [data])
 
   return (
-    <div className="scrollbar flex h-full flex-col gap-32 overflow-y-auto rounded-3x bg-white p-48">
-      {/* <div className="flex">
-        <div
-          onClick={() => navigate(-1)}
-          className="items-centere flex gap-12 rounded-2xl bg-warna-dark px-24 py-12 text-white hover:cursor-pointer hover:bg-opacity-80"
-        >
-          <FontAwesomeIcon icon={faArrowLeft} />
-          Kembali
+    <Form {...form}>
+      <form
+        className="scrollbar flex w-full flex-col gap-32 overflow-y-auto pt-24"
+        onSubmit={form.handleSubmit(handleSubmit)}
+      >
+        <div className="flex flex-col gap-32">
+          <p className="font-roboto text-[3.2rem]">
+            {jenis === 'Visi' ? 'Visi 🎯' : jenis === 'Misi' ? 'Misi 🚩' : ''}
+          </p>
         </div>
-      </div> */}
-      <p className="font-roboto text-[2.4rem]">Form Update Identitas</p>
-      {/* <Form {...form}>
-        <form
-          className="scrollbar flex flex-1 flex-col gap-32 overflow-y-auto"
-          onSubmit={form.handleSubmit(handleSubmit)}
-        >
-          <div className="flex gap-64 phones:flex-col phones:gap-32">
-            <FormLabelInput
-              name="sk_pendirian"
-              form={form}
-              label="SK Pendirian"
-              placeholder="Masukkan SK Pendirian"
-              className="text-sim-dark"
-              type="text"
-              isDisabled={isLoadingUpdateProfil}
-            />
+        <div className="flex gap-64 phones:flex-col phones:gap-32">
+          <FormLabelInput
+            name="keterangan"
+            form={form}
+            label="Keterangan"
+            placeholder="Masukkan keterangan"
+            className="text-sim-dark"
+            type="text"
+            isDisabled={isLoading}
+          />
 
-            <FormLabelInput
-              name="tgl_sk_pendirian"
-              form={form}
-              label="Tanggal SK Pendirian"
-              className="text-sim-dark"
-              type="date"
-              isDisabled={isLoadingUpdateProfil}
-            />
+          <FormLabelInput
+            name="sub_keterangan"
+            form={form}
+            label="Sub Keterangan"
+            placeholder="Masukkan sub keterangan"
+            className="text-sim-dark"
+            type="text"
+            isDisabled={isLoading}
+          />
+        </div>
+
+        {jenis === 'Misi' && (
+          <div className="flex flex-col gap-y-16 text-warna-dark">
+            <p className="text-[2rem]">List</p>
+            {fields.map((item, index) => (
+              <div key={item.id} className="flex gap-32">
+                <div className="flex flex-1 items-center gap-32">
+                  <FormLabelInput
+                    name={`list.${index}.keterangan`}
+                    form={form}
+                    label="Keterangan"
+                    placeholder="Masukkan keterangan"
+                    className="w-4/6"
+                    type="text"
+                    isDisabled={isLoading}
+                  />
+                  <FormLabelInput
+                    name={`list.${index}.urutan`}
+                    form={form}
+                    label="Urutan"
+                    placeholder="Masukkan urutan"
+                    className="w-1/6"
+                    type="text"
+                    isDisabled={isLoading}
+                    isNumber
+                  />
+                </div>
+                <div className="flex items-end">
+                  <button
+                    type="button"
+                    onClick={() => remove(index)}
+                    className="rounded rounded-lg bg-warna-red px-16 py-16 text-white hover:bg-opacity-80"
+                  >
+                    <FontAwesomeIcon icon={faTrash} />
+                  </button>
+                </div>
+              </div>
+            ))}
+            <div className="flex">
+              <button
+                type="button"
+                onClick={() => append({ nama: '', urutan: '' })}
+                className="rounded flex items-center gap-12 rounded-lg bg-blue-500 px-24 py-12 text-white hover:bg-opacity-80"
+              >
+                <FontAwesomeIcon icon={faPlus} />
+                <p>Tambah</p>
+              </button>
+            </div>
           </div>
+        )}
 
-          <div className="flex gap-64 phones:flex-col phones:gap-32">
-            <FormLabelInput
-              name="sk_operasional"
-              form={form}
-              label="SK Operasional"
-              placeholder="Masukkan SK Operasional"
-              className="text-sim-dark"
-              type="text"
-              isDisabled={isLoadingUpdateProfil}
-            />
-
-            <FormLabelInput
-              name="tgl_sk_operasional"
-              form={form}
-              label="Tanggal SK Operasional"
-              className="text-sim-dark"
-              type="date"
-              isDisabled={isLoadingUpdateProfil}
-            />
-          </div>
-
-          <hr className="border" />
-
-          <div className="flex gap-64 phones:flex-col phones:gap-32">
-            <SelectListAkreditasi
-              useFormReturn={form}
-              headerLabel="Akreditasi"
-              placeholder="Pilih Akreditasi"
-              name="id_akreditasi"
-              className="w-1/2 hover:cursor-not-allowed phones:w-full"
-              isDisabled={isLoadingUpdateProfil}
-            />
-            <SelectListPenyelenggaraan
-              useFormReturn={form}
-              headerLabel="Penyelenggara"
-              placeholder="Pilih Penyelenggara"
-              name="penyelenggaraan"
-              className="w-1/2 hover:cursor-not-allowed phones:w-full"
-              isDisabled={isLoadingUpdateProfil}
-            />
-          </div>
-
-          <div className="flex gap-64 phones:flex-col phones:gap-32">
-            <FormLabelInput
-              name="tgl_mulai_akreditasi"
-              form={form}
-              label="Tanggal Mulai Akreditasi"
-              placeholder="Masukkan Tanggal Mulai Akreditasi"
-              className="text-sim-dark"
-              type="date"
-              isDisabled={isLoadingUpdateProfil}
-            />
-
-            <FormLabelInput
-              name="tgl_akhir_akreditasi"
-              form={form}
-              label="Tanggal Akhir Akreditasi"
-              placeholder="Masukkan Tanggal Akhir Akreditasi"
-              className="text-sim-dark"
-              type="date"
-              isDisabled={isLoadingUpdateProfil}
-            />
-          </div>
-
-          <div className="flex gap-64 phones:flex-col phones:gap-32">
-            <FormLabelInput
-              name="nis"
-              form={form}
-              label="NIS"
-              placeholder="NIS"
-              className="text-sim-dark"
-              type="text"
-              isDisabled={isLoadingUpdateProfil}
-            />
-
-            <FormLabelInput
-              name="nss"
-              form={form}
-              label="NSS"
-              placeholder="NSS"
-              className="text-sim-dark"
-              type="text"
-              isDisabled={isLoadingUpdateProfil}
-            />
-          </div>
-
-          <div className="flex gap-64 phones:flex-col phones:gap-32">
-            <FormLabelInput
-              name="alamat"
-              form={form}
-              label="Alamat"
-              placeholder="Alamat"
-              className="text-sim-dark"
-              type="text"
-              isDisabled={isLoadingUpdateProfil}
-            />
-
-            <FormLabelInput
-              name="email"
-              form={form}
-              label="Email"
-              placeholder="Email"
-              className="text-sim-dark"
-              type="email"
-              isDisabled={isLoadingUpdateProfil}
-            />
-          </div>
-
-          <div className="flex gap-64 phones:flex-col phones:gap-32">
-            <FormLabelInput
-              name="telepon"
-              form={form}
-              label="Telepon"
-              placeholder="Telepon"
-              className="text-sim-dark w-1/2"
-              type="text"
-              isNumber
-              isDisabled={isLoadingUpdateProfil}
-            />
-
-            <div className="w-1/2 phones:w-full" />
-          </div>
-
-          <hr className="border" />
-
-          <div className="flex gap-64 phones:flex-col phones:gap-32">
-            <FormLabelInput
-              name="nama_pimpinan"
-              form={form}
-              label="Nama Pimpinan"
-              placeholder="Nama Pimpinan"
-              className="text-sim-dark"
-              type="text"
-              isDisabled={isLoadingUpdateProfil}
-            />
-
-            <FormLabelInput
-              name="nip_pimpinan"
-              form={form}
-              label="NIP Pimpinan"
-              placeholder="NIP Pimpinan"
-              className="text-sim-dark"
-              type="text"
-              isDisabled={isLoadingUpdateProfil}
-            />
-          </div>
-
+        {jenis === 'Misi' && (
           <FormField
-            name="photo_pimpinan"
+            name="berkas"
             control={form.control}
             render={({ field }) => (
               <FormItem className="flex flex-col space-y-2">
@@ -478,7 +221,7 @@ export default function FormVisiMisi() {
                       id="berkas"
                       type="file"
                       value={''}
-                      // disabled={isLoadingUpload || loadingFile}
+                      disabled={isLoading || loadingFile}
                       placeholder="Lampiran"
                       onChange={(e) => {
                         if (e.target.files[0].size > 5 * 1000000) {
@@ -561,24 +304,24 @@ export default function FormVisiMisi() {
               </FormItem>
             )}
           />
+        )}
 
-          <div className="flex justify-end">
-            <button
-              type="submit"
-              className="flex items-center justify-center gap-12 rounded-2xl bg-warna-primary px-32 py-12 text-white"
-            >
-              <p>{lastPathname === 'edit' ? 'Edit' : 'Tambah'}</p>
-              {isLoadingUpdateProfil ? (
-                <span className="animate-spin duration-300">
-                  <FontAwesomeIcon icon={faSpinner} />
-                </span>
-              ) : (
-                <FontAwesomeIcon icon={faSave} />
-              )}
-            </button>
-          </div>
-        </form>
-      </Form> */}
-    </div>
+        <div className="flex justify-end">
+          <button
+            type="submit"
+            className="flex items-center justify-center gap-12 rounded-2xl bg-warna-primary px-32 py-12 text-white"
+          >
+            <p>{lastPathname === 'edit' ? 'Edit' : 'Simpan'}</p>
+            {isLoading ? (
+              <span className="animate-spin duration-300">
+                <FontAwesomeIcon icon={faSpinner} />
+              </span>
+            ) : (
+              <FontAwesomeIcon icon={faSave} />
+            )}
+          </button>
+        </div>
+      </form>
+    </Form>
   )
 }
