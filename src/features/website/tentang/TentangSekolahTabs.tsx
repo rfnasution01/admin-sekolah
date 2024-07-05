@@ -38,7 +38,7 @@ export function TentangSekolahTab({
           {
             'border-b-2 border-warna-dark text-warna-dark':
               menu === 'identitas',
-            'text-warna-grey border-b-2 border-transparent':
+            'border-b-2 border-transparent text-warna-grey':
               menu !== 'identitas',
           },
         )}
@@ -56,7 +56,7 @@ export function TentangSekolahTab({
             {
               'border-b-2 border-warna-dark text-warna-dark':
                 menu === item?.jenis?.toLowerCase(),
-              'text-warna-grey border-b-2 border-transparent':
+              'border-b-2 border-transparent text-warna-grey':
                 menu !== item?.jenis?.toLowerCase(),
             },
           )}
@@ -69,7 +69,7 @@ export function TentangSekolahTab({
         <Link
           to={`/${firstPathname}/${secondPathname}/${thirdPathname}/tambah`}
           className={clsx(
-            'flex items-center gap-12 rounded-lg border-transparent bg-warna-primary px-24 py-0 text-[1.8rem] text-white transition-all duration-300 ease-in-out hover:cursor-pointer hover:bg-opacity-80',
+            'mb-12 flex items-center gap-12 rounded-lg border-transparent bg-warna-primary px-12 py-4 text-[1.8rem] text-white transition-all duration-300 ease-in-out hover:cursor-pointer hover:bg-opacity-80',
           )}
         >
           <FontAwesomeIcon icon={faPlus} />

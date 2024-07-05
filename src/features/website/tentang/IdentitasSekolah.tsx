@@ -7,7 +7,7 @@ export function IdentitasSekolah({ data }: { data: IdentitasSekolahType }) {
   return (
     <div className="scrollbar flex h-full w-full flex-col gap-32 overflow-y-auto">
       {/* --- Header --- */}
-      <div className="flex w-full items-center justify-between gap-32">
+      <div className="flex w-full items-center gap-32">
         <p className="font-roboto text-[3.2rem]">Identitas Sekolah</p>
         <button
           type="button"

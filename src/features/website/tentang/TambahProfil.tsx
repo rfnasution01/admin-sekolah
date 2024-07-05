@@ -8,18 +8,20 @@ import 'react-toastify/dist/ReactToastify.css'
 import { zodResolver } from '@hookform/resolvers/zod'
 import * as zod from 'zod'
 import { useForm } from 'react-hook-form'
-import { TambahProfilSekolahPage } from '@/routes/loadables'
 import { useCreateTentangSekolahMutation } from '@/store/slices/WebsiteProfilAPI'
 import { PostTentangProfilParams } from '@/libs/type'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { FormTambahProfil } from '@/components/FormComponent'
+import { TentangSekolahSchema } from '@/libs/schema/website/TentangSekolahSchema'
 
 export default function TambahProfil() {
   const navigate = useNavigate()
   const { lastPathname, secondPathname } = usePathname()
 
-  const form = useForm<zod.infer<typeof TambahProfilSekolahPage>>({
-    resolver: zodResolver(TambahProfilSekolahPage),
+  const [urls, setUrls] = useState<string>()
+
+  const form = useForm<zod.infer<typeof TentangSekolahSchema>>({
+    resolver: zodResolver(TentangSekolahSchema),
     defaultValues: {},
   })
 
@@ -36,11 +38,11 @@ export default function TambahProfil() {
 
   const handleSubmit = async (values: PostTentangProfilParams) => {
     const body = {
-      id: values?.id,
+      id: values?.id ?? null,
       jenis: values?.jenis,
       keterangan: values?.keterangan,
       sub_keterangan: values?.sub_keterangan,
-      gambar_url: values?.gambar_url,
+      gambar_url: urls,
       list: values?.list,
     }
 
@@ -108,6 +110,8 @@ export default function TambahProfil() {
           form={form}
           isLoading={isLoadingTambahProfil}
           handleSubmit={handleSubmit}
+          setUrls={setUrls}
+          urls={urls}
         />
       </div>
       <ToastContainer />

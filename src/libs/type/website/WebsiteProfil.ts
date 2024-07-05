@@ -26,6 +26,7 @@ export type IdentitasSekolahType = {
 }
 
 export type ProfilSekolahType = {
+  id: string
   jenis: string
   keterangan: string
   sub_keterangan: string

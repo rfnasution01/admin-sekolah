@@ -12,17 +12,25 @@ export const WebsiteProfilEndpoints = api.injectEndpoints({
         url: `admin/website/profil/tentang`,
         method: 'GET',
       }),
+      providesTags: ['profil-tentang'],
     }),
     createTentangSekolah: builder.mutation<
       void,
       { body: PostTentangProfilParams }
     >({
       query: ({ body }) => ({
-        url: `auth/login`,
+        url: `admin/website/profil/tentang`,
         method: 'POST',
         body: body,
       }),
-      invalidatesTags: [],
+      invalidatesTags: ['profil-tentang'],
+    }),
+    deleteTentangSekolah: builder.mutation<void, { id: string }>({
+      query: ({ id }) => ({
+        url: `admin/website/profil/tentang/${id}`,
+        method: 'DELETE',
+      }),
+      invalidatesTags: ['profil-tentang'],
     }),
     getVisiMisi: builder.query<Res<GetVisiMisiResponse>, void>({
       query: () => ({
@@ -37,4 +45,5 @@ export const {
   useGetTentangSekolahQuery,
   useGetVisiMisiQuery,
   useCreateTentangSekolahMutation,
+  useDeleteTentangSekolahMutation,
 } = WebsiteProfilEndpoints

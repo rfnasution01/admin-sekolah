@@ -1,19 +1,26 @@
 import { LabelComponent } from '@/components/LabelComponent'
+import { ModalValidasi } from '@/components/ModalComponent'
 import { capitalizeFirstLetterFromLowercase } from '@/libs/helpers/formatText'
 import { ProfilSekolahType } from '@/libs/type'
-import { faPencil, faTrash } from '@fortawesome/free-solid-svg-icons'
+import { faPencil, faSpinner, faTrash } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { useState } from 'react'
 
 export function ProfilSekolah({
   data,
   jenis,
+  handleSubmitDelete,
+  isLoadingDelete,
 }: {
   data: ProfilSekolahType[]
   jenis: string
+  handleSubmitDelete: (id: string) => Promise<void>
+  isLoadingDelete: boolean
 }) {
   const tujuanSekolah = data?.find((item) => item?.jenis === 'Tujuan')
   const hasilSekolah = data?.find((item) => item?.jenis === 'Hasil')
   const sasaranSekolah = data?.find((item) => item?.jenis === 'Sasaran')
+  const [isShowDelete, setIsShowDelete] = useState<boolean>(false)
 
   const item =
     jenis === 'tujuan'
@@ -27,7 +34,7 @@ export function ProfilSekolah({
   return (
     <div className="scrollbar flex h-full w-full flex-col gap-32 overflow-y-auto">
       {/* --- Header --- */}
-      <div className="flex w-full items-center justify-between gap-32">
+      <div className="flex w-full items-center gap-32">
         <p className="font-roboto text-[3.2rem]">
           {capitalizeFirstLetterFromLowercase(jenis)} Sekolah
         </p>
@@ -41,6 +48,8 @@ export function ProfilSekolah({
           </button>
           <button
             type="button"
+            disabled={isLoadingDelete}
+            onClick={() => setIsShowDelete(true)}
             className="flex items-center gap-12 rounded-2xl bg-warna-red px-24 py-12 text-white hover:bg-opacity-80"
           >
             <FontAwesomeIcon icon={faTrash} />
@@ -51,7 +60,7 @@ export function ProfilSekolah({
       {/* --- Konten --- */}
       <div className="flex flex-col gap-32">
         {/* --- Keterangan --- */}
-        <div className="bg-warna-grey flex gap-32 rounded-2x p-32 text-white">
+        <div className="flex gap-32 rounded-2x bg-warna-grey p-32 text-white">
           <div className="flex flex-1 flex-col gap-24">
             <LabelComponent
               label="Keterangan"
@@ -89,6 +98,27 @@ export function ProfilSekolah({
           </div>
         )}
       </div>
+      <ModalValidasi
+        isOpen={isShowDelete}
+        setIsOpen={setIsShowDelete}
+        child={
+          <button
+            type="button"
+            disabled={isLoadingDelete}
+            onClick={() => handleSubmitDelete(item?.id)}
+            className="flex items-center gap-12 rounded-2xl bg-warna-red px-24 py-12 text-white hover:bg-opacity-80"
+          >
+            {isLoadingDelete ? (
+              <span className="animate-spin duration-300">
+                <FontAwesomeIcon icon={faSpinner} />
+              </span>
+            ) : (
+              <FontAwesomeIcon icon={faTrash} />
+            )}
+            <p className="font-sf-pro">Hapus</p>
+          </button>
+        }
+      />
     </div>
   )
 }

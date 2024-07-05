@@ -21,6 +21,14 @@ export const ReferensiEndpoints = api.injectEndpoints({
         method: 'GET',
       }),
     }),
+    createFile: builder.mutation<{ url: string }, FormData>({
+      query: (foto) => ({
+        url: 'admin/upload',
+        method: 'POST',
+        body: foto,
+        formData: true,
+      }),
+    }),
   }),
 })
 
@@ -28,4 +36,5 @@ export const {
   useGetAkreditasiQuery,
   useGetJenisProfilQuery,
   useGetPenyelenggaraQuery,
+  useCreateFileMutation,
 } = ReferensiEndpoints
